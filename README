@@ -1,0 +1,8 @@
+Algorithms
+----------
+This repository is for some random algorithms I develop during my free time.
+
+Whats new?
+----------
+- Added mergesort implementation to SLIST. (see SLIST_MERGESORT_PROTOTYPE(),
+SLIST_MERGESORT_GENERATE() and SLIST_MERGESORT())
