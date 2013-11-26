@@ -20,8 +20,8 @@ number_cmp(struct number *n, struct number *nn)
 	return (0);
 }
 
-SLIST_MERGESORT_PROTOTYPE(NHEAD, number, n_entry, number_cmp)
-SLIST_MERGESORT_GENERATE(NHEAD, number, n_entry, number_cmp)
+SLIST_MERGESORT_PROTOTYPE_STATIC(NHEAD, number, n_entry)
+SLIST_MERGESORT_GENERATE_STATIC(NHEAD, number, n_entry, number_cmp)
 
 int
 main(int argc, char *argv[])

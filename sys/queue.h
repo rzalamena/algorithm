@@ -161,11 +161,22 @@ struct {								\
 	}								\
 } while (0)
 
-#define SLIST_MERGESORT_PROTOTYPE(name, type, field, cmp)		\
-	struct type *name##_MERGE(struct type *, struct type *);	\
-	struct type *name##_MERGESORT(struct type *);
+
+#define SLIST_MERGESORT_PROTOTYPE(name, type, field)		\
+	SLIST_MERGESORT_PROTOTYPE_INTERNAL(name, type, field,)
+#define SLIST_MERGESORT_PROTOTYPE_STATIC(name, type, field)		\
+	SLIST_MERGESORT_PROTOTYPE_INTERNAL(name, type, field, __attribute__((__unused__)) static)
+#define SLIST_MERGESORT_PROTOTYPE_INTERNAL(name, type, field, attr)	\
+	attr struct type *name##_MERGE(struct type *, struct type *);	\
+	attr struct type *name##_MERGESORT(struct type *);
+
 #define SLIST_MERGESORT_GENERATE(name, type, field, cmp)		\
-	struct type *name##_MERGE(struct type *s, struct type *e) {	\
+	SLIST_MERGESORT_GENERATE_INTERNAL(name, type, field, cmp,)
+#define SLIST_MERGESORT_GENERATE_STATIC(name, type, field, cmp)		\
+	SLIST_MERGESORT_GENERATE_INTERNAL(name, type, field, cmp, __attribute__((__unused__)) static)
+#define SLIST_MERGESORT_GENERATE_INTERNAL(name, type, field, cmp, attr)	\
+	attr struct type *						\
+	name##_MERGE(struct type *s, struct type *e) {			\
 		struct type head;					\
 		struct type *a = &head;					\
 		while ((s != NULL) && (e != NULL)) {			\
@@ -182,7 +193,8 @@ struct {								\
 		a->field.sle_next = (s != NULL) ? (s) : (e);		\
 		return (head.field.sle_next);				\
 	}								\
-	struct type *name##_MERGESORT(struct type *a) {			\
+	attr struct type *						\
+	name##_MERGESORT(struct type *a) {				\
 		struct type *s, *e;					\
 		if ((a == NULL) || (a->field.sle_next == NULL))		\
 			return (a);					\
